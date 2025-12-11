@@ -16,7 +16,6 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
   TextEditingController lastNameController = TextEditingController();
   TextEditingController ageController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController(); 
 
   final _formKey = GlobalKey<FormState>();
 
@@ -28,7 +27,6 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
     lastNameController.dispose();
     ageController.dispose();
     emailController.dispose();
-    passwordController.dispose();
     super.dispose();
   }
 
@@ -44,14 +42,13 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
       final lastName = lastNameController.text;
       final age = int.parse(ageController.text); 
       final email = emailController.text;
-      final password = passwordController.text; 
-      
+
+      // Pemanggilan registerUser tanpa password
       final User registeredUser = await registerUser(
         firstName: firstName,
         lastName: lastName,
         age: age,
         email: email,
-        password: password, 
       );
 
       final registeredName = registeredUser.firstName + ' ' + registeredUser.lastName;
@@ -67,7 +64,7 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
         
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const TodoListScreen()),
+          MaterialPageRoute(builder: (context) => const TodolistPage()),
         );
       }
     } catch (e) {
@@ -112,22 +109,19 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
 
                 const SizedBox(height: 30),
 
+                // Input Field 1: First Name
                 _buildInput(firstNameController, "First Name", TextInputType.text),
 
+                // Input Field 2: Last Name
                 _buildInput(lastNameController, "Last Name", TextInputType.text),
 
+                // Input Field 3: Age
                 _buildInput(ageController, "Age", TextInputType.number, isAge: true),
 
+                // Input Field 4: Email
                 _buildInput(emailController, "Email", TextInputType.emailAddress, isEmail: true),
                 
-                _buildInput(
-                  passwordController, 
-                  "Password", 
-                  TextInputType.visiblePassword, 
-                  isPassword: true, 
-                  obscureText: true 
-                ),
-
+                // Input Password telah dihapus
 
                 const SizedBox(height: 30),
 
@@ -166,8 +160,7 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
     {
       bool isAge = false, 
       bool isEmail = false, 
-      bool isPassword = false, 
-      bool obscureText = false 
+      bool obscureText = false // Dibiarkan jika ada input sensitif di masa depan, tapi saat ini selalu false
     }
   ) {
     return Padding(
@@ -175,6 +168,8 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
       child: TextFormField(
         controller: controller,
         keyboardType: keyboardType,
+        // Dibuat selalu false karena password field sudah dihapus.
+        // Jika Anda ingin field lain disembunyikan, set parameter ini menjadi true saat memanggil _buildInput
         obscureText: obscureText, 
         decoration: InputDecoration(
           hintText: hintText,
@@ -197,9 +192,6 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
             if (!emailRegex.hasMatch(value)) {
               return 'Masukkan email yang valid';
             }
-          }
-          if (isPassword && value.length < 6) {
-            return 'Password minimal 6 karakter';
           }
           return null;
         },
