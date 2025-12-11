@@ -3,7 +3,7 @@ import 'package:http/http.dart' as fatimah;
 import '../models/todolistModel.dart';
 import '../models/userModel.dart';
 
-class ApiHelper {
+// class ApiHelper {
   const String URL='http://dummyjson.com';
 final Map<String, String> _header ={
   "Content-Type": "application/json",
@@ -75,7 +75,7 @@ Future<Todo> buatTodo({
       Map<String, dynamic> json = jsonDecode(reaksi.body);
       return Todo.fromMap(json);
     }else{
-      throw Exception("Registrasi gagal. Status code: ${reaksi.statusCode}");
+      throw Exception("gagal buat todolistl. Status code: ${reaksi.statusCode}");
     }
   } catch (e) {
       throw Exception("gagal ngepost $e");
@@ -86,7 +86,8 @@ Future<Todo> buatTodo({
     var url =Uri.parse('$URL/todos/$id');
 
     try{
-      var reaksi = await fatimah.put(body: url,
+      var reaksi = await fatimah.put(
+      url,
       headers:_header,
       body:jsonEncode({
         'completed':newCompletedStatus,
@@ -95,10 +96,10 @@ Future<Todo> buatTodo({
       Map<String, dynamic> json = jsonDecode(reaksi.body);
       return Todo.fromMap(json);
     }else{
-      throw Exception("Registrasi gagal. $id Status code: ${reaksi.statusCode}");
+      throw Exception("gagal perbaharui todolist. $id Status code: ${reaksi.statusCode}");
     }
   } catch (e) {
-      throw Exception("gagal ngepost $e");
+      throw Exception("gagal ngeperbaharui $e");
     
     }
 
@@ -113,13 +114,13 @@ Future<Todo> buatTodo({
       Map<String, dynamic> json = jsonDecode(reaksi.body);
       return true;
     }else{
-      throw Exception("Registrasi gagal. $id Status code: ${reaksi.statusCode}");
+      throw Exception("gagal ngedelete todolist nya. $id Status code: ${reaksi.statusCode}");
     }
   } catch (e) {
-      throw Exception("gagal ngepost $e");
+      throw Exception("gagal nge delete $e");
     
     
     }
-  }
-
 }
+
+
