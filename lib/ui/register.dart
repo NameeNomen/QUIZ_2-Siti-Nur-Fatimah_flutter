@@ -89,7 +89,8 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Halaman Registrasi Ujian')),
+      appBar: AppBar(title: const Text('Halaman Registrasi')),
+      backgroundColor: Color.fromARGB(255, 232, 245, 173),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 50),
@@ -131,7 +132,7 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
                   child: ElevatedButton(
                     onPressed: isLoading ? null : _register, 
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.deepPurple,
+                     backgroundColor: Color(0xFF004269),
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
