@@ -19,9 +19,16 @@ Future<User> registerUser({
   var url = Uri.parse('$URL/users/add');
   try {
     print('sedang mengirim data registerasi, Harap sabar');
-    var reaksi = await fatimah.post(body: url,
+    var reaksi = await fatimah.post(
+      url,
     header: _header,
-    body:jsonEncode)
+    body:jsonEncode({
+      'firstName': firstName,
+      'lastName':lastName,
+      'age':age,
+      'email':email
+    }),
+    )
   } catch (e) {
     
   }
