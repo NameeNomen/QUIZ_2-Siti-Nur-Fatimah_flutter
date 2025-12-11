@@ -55,5 +55,71 @@ Future<List<Todo>> AmbilDataTodo()async{
     throw Exception("apalagi ini getnya gagal memuat (Todos)$e");
     }
 }
-Future<Todo
+Future<Todo> buatTodo({
+  required String todoText,
+  required int userId,
+})async{
+  var url = Uri.parse('$URL/todos/add');
+
+  try{
+    var reaksi= await fatimah.post( url,
+    headers: _header,
+    body:jsonEncode({
+      'todo':todoText,
+      'completed':false,
+      'userId':userId,
+    }),
+    
+     );
+     if (reaksi.statusCode==200 || reaksi.statusCode ==2001) {
+      Map<String, dynamic> json = jsonDecode(reaksi.body);
+      return Todo.fromMap(json);
+    }else{
+      throw Exception("Registrasi gagal. Status code: ${reaksi.statusCode}");
+    }
+  } catch (e) {
+      throw Exception("gagal ngepost $e");
+    
+  }
+  }
+  Future<Todo> perbaharuiTodo(int id, bool newCompletedStatus)async{
+    var url =Uri.parse('$URL/todos/$id');
+
+    try{
+      var reaksi = await fatimah.put(body: url,
+      headers:_header,
+      body:jsonEncode({
+        'completed':newCompletedStatus,
+      }),);
+      if (reaksi.statusCode==200) {
+      Map<String, dynamic> json = jsonDecode(reaksi.body);
+      return Todo.fromMap(json);
+    }else{
+      throw Exception("Registrasi gagal. $id Status code: ${reaksi.statusCode}");
+    }
+  } catch (e) {
+      throw Exception("gagal ngepost $e");
+    
+    }
+
+  }
+
+  Future<bool> hapusTodo(int id)async{
+    var url = Uri.parse('$URL/todos/$id');
+
+       try{
+      var reaksi = await fatimah.delete(url);
+      if (reaksi.statusCode==200) {
+      Map<String, dynamic> json = jsonDecode(reaksi.body);
+      return true;
+    }else{
+      throw Exception("Registrasi gagal. $id Status code: ${reaksi.statusCode}");
+    }
+  } catch (e) {
+      throw Exception("gagal ngepost $e");
+    
+    
+    }
+  }
+
 }
