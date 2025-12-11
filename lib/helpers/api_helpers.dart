@@ -4,7 +4,9 @@ import '../models/todolistModel.dart';
 import '../models/userModel.dart';
 
 // class ApiHelper {
-  const String URL='http://dummyjson.com';
+
+
+  const String URL='https://dummyjson.com';
 final Map<String, String> _header ={
   "Content-Type": "application/json",
 };
@@ -29,9 +31,9 @@ Future<User> registerUser({
       'email':email
     }),
     );
-    if (reaksi.statusCode==200 || reaksi.statusCode ==2001) {
-      Map<String, dynamic> json = jsonDecode(reaksi.body);
-      return User.fromMap(json);
+    if (reaksi.statusCode == 200 || reaksi.statusCode == 201) {
+    Map<String, dynamic> json = jsonDecode(reaksi.body);
+    return User.fromMap(json);
     }else{
       throw Exception("Registrasi gagal. Status code: ${reaksi.statusCode}");
     }
